@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小行行的甜蜜问答</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #ffebf0;
+            color: #d63384;
+        }
+        #game-container {
+            margin-top: 50px;
+            padding: 20px;
+            background: white;
+            display: inline-block;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            background-color: #d63384;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #a6266b;
+        }
+    </style>
+</head>
+<body>
+    <h1>小行行的甜蜜问答</h1>
+    <div id="game-container">
+        <p id="question">点击按钮开始游戏！</p>
+        <button onclick="startGame()">开始</button>
+        <div id="answers" style="display:none;">
+            <button id="option1" onclick="checkAnswer(0)"></button>
+            <button id="option2" onclick="checkAnswer(1)"></button>
+            <button id="option3" onclick="checkAnswer(2)"></button>
+        </div>
+        <p id="feedback"></p>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "我们第一次约会的日期是？",
+                options: ["2024-08-08", "2024-08-09", "2024-08-10"],
+                answer: 1,
+                message: "答对啦！那天是我最开心的日子！"
+            },
+            {
+                question: "我最喜欢小行行哪一点？",
+                options: ["笑容", "撒娇", "全部"],
+                answer: 2,
+                message: "嘿嘿，你最懂我啦~"
+            },
+            {
+                question: "我们的情侣昵称是什么？",
+                options: ["小猪&大猪", "小宝&大宝", "小行行&小可爱"],
+                answer: 1,
+                message: "答对了！你是我de baobao~"
+            }
+        ];
+        
+        let currentQuestion = 0;
+
+        function startGame() {
+            currentQuestion = 0;
+            document.getElementById("answers").style.display = "block";
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            let q = questions[currentQuestion];
+            document.getElementById("question").innerText = q.question;
+            document.getElementById("option1").innerText = q.options[0];
+            document.getElementById("option2").innerText = q.options[1];
+            document.getElementById("option3").innerText = q.options[2];
+            document.getElementById("feedback").innerText = "";
+        }
+
+        function checkAnswer(choice) {
+            let q = questions[currentQuestion];
+            if (choice === q.answer) {
+                document.getElementById("feedback").innerText = q.message;
+                currentQuestion++;
+                if (currentQuestion < questions.length) {
+                    setTimeout(loadQuestion, 1000);
+                } else {
+                    setTimeout(() => {
+                        document.getElementById("question").innerText = "小行行，你真棒！你答对了所有问题！";
+                        document.getElementById("answers").style.display = "none";
+                    }, 1000);
+                }
+            } else {
+                document.getElementById("feedback").innerText = "答错啦！再想想看~";
+            }
+        }
+    </script>
+</body>
+</html>
